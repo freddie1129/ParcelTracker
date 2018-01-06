@@ -1,0 +1,161 @@
+package com.fredroid.parceltracking.db;
+
+import android.annotation.SuppressLint;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.support.annotation.Nullable;
+
+import com.fredroid.parceltracking.db.converter.DateConverter;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/**
+ * Created by jackttc on 23/12/17.
+ */
+
+
+public class DatabaseCreator {
+
+    private static DatabaseCreator sInstance;
+
+    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
+
+    private AppDatabase mDb;
+
+    private final AtomicBoolean mInitializing = new AtomicBoolean(true);
+
+    // For Singleton instantiation
+    private static final Object LOCK = new Object();
+
+    public synchronized static DatabaseCreator getInstance(Context context) {
+        if (sInstance == null) {
+            synchronized (LOCK) {
+                if (sInstance == null) {
+                    sInstance = new DatabaseCreator();
+                }
+            }
+        }
+        return sInstance;
+    }
+
+    /** Used to observe when the database initialization is done */
+    public LiveData<Boolean> isDatabaseCreated() {
+        return mIsDatabaseCreated;
+    }
+
+    @Nullable
+    public AppDatabase getDatabase() {
+        return mDb;
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Creates or returns a previously-created database.
+     * <p>
+     * Although this uses an AsyncTask which currently uses a serial executor, it's thread-safe.
+     */
+    @SuppressLint("StaticFieldLeak")
+    public void createDb(Context context) {
+
+     //   if (Configuration.isNewAccountOnThisPhone)
+     //  {
+      //      context.getApplicationContext().deleteDatabase(AppDatabase.DATABASE_NAME);
+       // }
+        mDb = Room.databaseBuilder(context.getApplicationContext(),
+                AppDatabase.class, AppDatabase.DATABASE_NAME).allowMainThreadQueries().build();
+
+   /*     Log.d("DatabaseCreator", "Creating DB from " + Thread.currentThread().getName());
+
+        if (!mInitializing.compareAndSet(true, false)) {
+            return; // Already initializing
+        }
+
+        mIsDatabaseCreated.setValue(false);// Trigger an update to show a loading screen.
+        new AsyncTask<Context, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Context... params) {
+                Log.d("DatabaseCreator",
+                        "Starting bg job " + Thread.currentThread().getName());
+
+                Context context = params[0].getApplicationContext();
+
+                // Reset the database to have new data on every run.
+               context.deleteDatabase(DATABASE_NAME);
+
+                // Build the database!
+                AppDatabase db = Room.databaseBuilder(context.getApplicationContext(),
+                        AppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+
+
+             //   Room.databaseBuilder(context.getApplicationContext(), au.com.twomatesmedia.captyavendor.AppDatabase.class, "captya-database")
+                        // allow queries on the main thread.
+                        // Don't do this on a real app! See PersistenceBasicSample for an example.
+                //        .allowMainThreadQueries()
+                 //       .build();
+
+                // Add a delay to simulate a long-running operation
+           //     addDelay();
+
+                // Add some data to the database
+            //    DatabaseInitUtil.initializeDb(db);
+            //    Log.d("DatabaseCreator",
+              //          "DB was populated in thread " + Thread.currentThread().getName());
+
+                mDb = db;
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void ignored) {
+                // Now on the main thread, notify observers that the db is created and ready.
+                mIsDatabaseCreated.setValue(true);
+            }
+        }.execute(context.getApplicationContext());*/
+    }
+
+    private void addDelay() {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException ignored) {}
+    }
+
+
+
+    @SuppressLint("StaticFieldLeak")
+    public void searchDb(String strKeywords) {
+
+      /*  if (!mInitializing.compareAndSet(true, false)) {
+            return; // Already initializing
+        }
+        mIsDatabaseCreated.setValue(false);
+        SearchRoundsTask searchRoundsTask = new SearchRoundsTask(strKeywords);
+        searchRoundsTask.execute(context.getApplicationContext());*/
+        mIsDatabaseCreated.setValue(false);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void ignored) {
+                // Now on the main thread, notify observers that the db is created and ready.
+                mIsDatabaseCreated.setValue(true);
+            }
+        }.execute();
+    }
+}

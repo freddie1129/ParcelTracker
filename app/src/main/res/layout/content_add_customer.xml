@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.fredroid.parceltracking.AddCustomerActivity"
+    tools:showIn="@layout/activity_add_customer">
+
+    <!--GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:columnCount="2"
+        android:rowCount="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"-->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:divider="?android:attr/listDivider"
+        android:dividerPadding="2dp"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:showDividers="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_add_customer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_add_customer_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <EditText
+                android:id="@+id/editText_add_customer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:hint="@string/activity_add_customer_name_hint"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_add_customer_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_add_customer_address"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+
+            <EditText
+                android:id="@+id/editText_add_customer_address"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="@string/activity_add_customer_address_hint"
+                android:inputType="textMultiLine"
+                android:textAlignment="gravity" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_add_customer_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_add_customer_phone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+
+            <EditText
+                android:id="@+id/editText_add_customer_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="@string/activity_add_customer_phone_hint"
+                android:inputType="number"
+                android:textAlignment="gravity" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_add_customer_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_add_customer_note"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+
+            <EditText
+                android:id="@+id/editText_add_customer_note"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="@string/activity_add_customer_note_hint"
+                android:inputType="textMultiLine"
+                android:textAlignment="gravity" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_add_customer_add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill_horizontal"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorButton"
+        android:text="@string/activity_add_customer_add"
+        android:textColor="@color/colorFont"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <!--/GridLayout-->
+
+
+</android.support.constraint.ConstraintLayout>

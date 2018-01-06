@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+    <TextView
+        android:id="@+id/textView_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorFontPrimary"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/listDivider" />
+
+    <!--LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorList"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+
+
+        <TextView
+            android:id="@+id/textView_record_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textColor="@color/colorFontSecond" />
+
+        <TextView
+            android:id="@+id/textView_record_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textColor="@color/colorFontSecond" />
+
+        <TextView
+            android:id="@+id/textView_record_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textColor="@color/colorFontSecond" >
+    </LinearLayout-->
+</android.support.v7.widget.CardView>

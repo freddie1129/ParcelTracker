@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "837898060953",
+    "firebase_url": "https://parceltracker-32c6b.firebaseio.com",
+    "project_id": "parceltracker-32c6b",
+    "storage_bucket": "parceltracker-32c6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837898060953:android:24858c97734eec5f",
+        "android_client_info": {
+          "package_name": "com.fredroid.parceltracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837898060953-533pc8bg5nhprfesge9se4aqr72lcfci.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6SonpVJuOyK8tzU1zeQv0TUN0fFLGhsE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
