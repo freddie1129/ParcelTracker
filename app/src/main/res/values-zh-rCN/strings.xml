@@ -76,6 +76,9 @@
   <string name="activity_about_location"><b>坐标: </b>Brisbane QLD AU</string>
   <string name="action_camera_text">相机</string>
 
+  <string name="request_permission_camera">应用需要相机权限.</string>
+
+
 
   <!--
       This is the name that users will see when interacting with this channel.

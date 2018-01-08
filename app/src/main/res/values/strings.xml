@@ -63,6 +63,8 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="activity_welcome_author" translatable="false">Powered by Freddie</string>
 
+    <string name="request_permission_camera">This App needs camera permission.</string>
+
 
     <!--
         This is the name that users will see when interacting with this channel.

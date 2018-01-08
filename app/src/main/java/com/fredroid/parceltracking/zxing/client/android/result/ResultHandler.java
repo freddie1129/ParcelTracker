@@ -23,7 +23,6 @@ import com.fredroid.parceltracking.zxing.client.android.Intents;
 import com.fredroid.parceltracking.zxing.client.android.LocaleManager;
 import com.fredroid.parceltracking.zxing.client.android.PreferencesActivity;
 import com.fredroid.parceltracking.R;
-import com.fredroid.parceltracking.zxing.client.android.book.SearchBookContentsActivity;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ParsedResultType;
 import com.google.zxing.client.result.ResultParser;
@@ -415,10 +414,6 @@ public abstract class ResultHandler {
   }
 
   final void searchBookContents(String isbnOrUrl) {
-    Intent intent = new Intent(Intents.SearchBookContents.ACTION);
-    intent.setClassName(activity, SearchBookContentsActivity.class.getName());
-    putExtra(intent, Intents.SearchBookContents.ISBN, isbnOrUrl);
-    launchIntent(intent);
   }
 
   final void openURL(String url) {

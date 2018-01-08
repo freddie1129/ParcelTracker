@@ -1,15 +1,20 @@
 package com.fredroid.parceltracking;
 
+import android.*;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -39,6 +44,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.fredroid.parceltracking.MainActivity.REQUEST_CAMERA_PERMISSION;
 
 public class AddParcelActivity extends AppCompatActivity implements
         MyPhotoRecyclerViewAdapter.OnListFragmentInteractionListener {
@@ -114,10 +121,84 @@ public class AddParcelActivity extends AppCompatActivity implements
         ((MyPhotoRecyclerViewAdapter) recyclerViewAddPhoto.getAdapter()).setbShowDelete(bShow);
     }
 
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(AddParcelActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
     @OnClick(R.id.button_add_parcel_scan)
     public void onClickScan() {
-        Intent intent = new Intent(this, CaptureActivity.class);
-        startActivityForResult(intent, ACTIVITY_CODE);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {
+
+                showMessageOKCancel(getString(R.string.request_permission_camera),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(AddParcelActivity.this, new String[] {android.Manifest.permission.CAMERA},
+                                        REQUEST_CAMERA_PERMISSION);
+                            }
+                        });
+
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA},
+                        REQUEST_CAMERA_PERMISSION);
+
+            }
+        }
+        else {
+            Intent intent = new Intent(this, CaptureActivity.class);
+            startActivityForResult(intent, ACTIVITY_CODE);
+        }
+        }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            /*  AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(this);
+                }
+                builder.setMessage("need perssion")
+                        .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                              //  finish();
+                                return;
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                                        Manifest.permission.READ_CONTACTS)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.CAMERA)) {
+                                    } else {
+                                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA},
+                                                REQUEST_CAMERA_PERMISSION);
+                                        return;
+                                    }
+                                }
+                            }
+                        })
+                        .show();*/
+                return;
+            } else {
+                Intent intent = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent, ACTIVITY_CODE);
+            }
+        }
     }
 
     @OnClick(R.id.button_add_parcel_close)

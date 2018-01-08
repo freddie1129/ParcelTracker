@@ -1,14 +1,21 @@
 package com.fredroid.parceltracking;
 
+import android.*;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.RecoverySystem;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -57,6 +64,7 @@ CustomerFragment.OnListFragmentInteractionListener{
     public static final int ACTIVITY_RESULT_CODE_EDIT_CUSTOMER = 102;
     public static final int  ACTIVITY_RESULT_CODE_SCANNER = 103;
 
+    public static final int REQUEST_CAMERA_PERMISSION = 1;
     public static DatabaseCreator databaseCreator;
 
     public static final String MAIN_CODE_STRING = "scan-result";
@@ -197,6 +205,50 @@ CustomerFragment.OnListFragmentInteractionListener{
     }
 
     @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            /*  AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(this);
+                }
+                builder.setMessage("need perssion")
+                        .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                              //  finish();
+                                return;
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                                        Manifest.permission.READ_CONTACTS)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.CAMERA)) {
+                                    } else {
+                                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA},
+                                                REQUEST_CAMERA_PERMISSION);
+                                        return;
+                                    }
+                                }
+                            }
+                        })
+                        .show();*/
+              return;
+            } else {
+                Intent intent = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent, ACTIVITY_RESULT_CODE_SCANNER);
+            }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -212,11 +264,43 @@ CustomerFragment.OnListFragmentInteractionListener{
         }
         if (id == R.id.action_scanning)
         {
-            Intent intent = new Intent(this, CaptureActivity.class);
-            startActivityForResult(intent,ACTIVITY_RESULT_CODE_SCANNER);
-        }
 
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+                    showMessageOKCancel(getString(R.string.request_permission_camera),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA},
+                                            REQUEST_CAMERA_PERMISSION);
+                                }
+                            });
+                    super.onOptionsItemSelected(item);
+
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                            REQUEST_CAMERA_PERMISSION);
+                    super.onOptionsItemSelected(item);
+                }
+            }
+            else {
+                Intent intent = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent, ACTIVITY_RESULT_CODE_SCANNER);
+            }
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 
     @Override
