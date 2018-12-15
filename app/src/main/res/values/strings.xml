@@ -59,7 +59,7 @@
     <string name="activity_about_weixing"><b>Wechat Account: </b>freddiegooludou</string>
     <string name="activity_about_location"><b>Location: </b>Brisbane QLD AU</string>
 
-    <string name="parcel_list">支持扫码查询<b>EWE</b>，<b>Fast-go</b>, <b>星速递</b>，<b>转四方</b>的包裹。</string>
+    <string name="parcel_list">Checkout out parcel\'s status delivered by <b>EWE</b>，<b>Fast-go</b>, <b>星速递</b>，<b>转四方</b>.</string>
 
 
 
