@@ -18,9 +18,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.fredroid.parceltracking.api.ParcelApiClient;
+import com.fredroid.parceltracking.api.ParcelService;
 import com.fredroid.parceltracking.db.entity.MyParcel;
 import com.fredroid.parceltracking.zxing.client.android.CaptureActivity;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,6 +37,8 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 
 public class RecordActivity extends AppCompatActivity implements
@@ -95,7 +101,14 @@ RecordFragment.OnListFragmentInteractionListener{
 
             }
 
-            showProgress(true);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showProgress(true);
+                }
+            });
+
             TaskTracking taskTracking = new TaskTracking(myParcel.getsParcel2DBar(),myParcel.getnCommpany());
             taskTracking.execute();
         }
@@ -326,92 +339,145 @@ RecordFragment.OnListFragmentInteractionListener{
             Document doc;
             switch (nCommpany)
             {
-                case ParcelConstant.COMMPANY_ewe:
-
+                case ParcelConstant.COMMPANY_transrush:
                     try {
-
-                        String sUrl = String.format("https://www.ewe.com.au/track?cno=%s#track-result",sCode);
-                        // doc = Jsoup.connect("https://www.ewe.com.au/track?cno=b978379135b#track-result").get();
-                        doc = Jsoup.connect(sUrl).get();
-                        Elements elements = doc.select(".track-right tbody tr");
-                        for (Element track : elements) {
-                            String s = "\n";
-                            Elements data = track.getElementsByTag("td");
-                            // String[] strings = new String[3];
-                            for (int i = 0; i < data.size(); i++) {
-                                s += data.get(i).html() + "\n";
+                        Response<ResponseBody> response = ParcelApiClient.getClient(ParcelConstant.COMMPANY_transrush).create(ParcelService.class).getStatusRes_transrush_Original(sCode).execute();
+                        if (response.isSuccessful())
+                        {
+                            JSONObject jsonObjectAll = new JSONObject(response.body().string());
+                            JSONArray jsonObject = jsonObjectAll.getJSONArray("data").getJSONObject(0).getJSONArray("tracks"); //  getJSONObject(0).getJSONArray("Details");
+                            int s = jsonObject.length();
+                            for (int i = 0; i < s; i++)
+                            {
+                                JSONObject o = jsonObject.getJSONObject(i);
+                                String string = String.format("\n%s\n%s\n",
+                                        o.getString("CreateDate"),o.getString("TrackContent"));
+                                recordList.add(string);
                             }
-                            recordList.add(s);
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        else
+                        {
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                    break;
+                case ParcelConstant.COMMPANY_ewe:
+                    try {
+                        Response<ResponseBody> response = ParcelApiClient.getClient(ParcelConstant.COMMPANY_ewe).create(ParcelService.class).getStatusRes_Ewe_Original(sCode).execute();
+                        if (response.isSuccessful())
+                        {
+                            JSONObject jsonObjectAll = new JSONObject(response.body().string());
+                            JSONArray jsonObject = jsonObjectAll.getJSONArray("Payload").getJSONObject(0).getJSONArray("Details");
+                            int s = jsonObject.length();
+                            for (int i = 0; i < s; i++)
+                            {
+                                JSONObject o = jsonObject.getJSONObject(i);
+                                String string = String.format("\n%s\n%s\n%s\n",
+                                        o.getString("DateString"),o.getString("Place"),o.getString("Message"));
+                                recordList.add(string);
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
                     }
                     break;
                 case ParcelConstant.COMMPANY_fast_go:
                     try {
-                        String sUrl = String.format("http://www.fastgo.com.au/TrackNum.aspx?dh=%s",sCode);
-                        //   doc = Jsoup.connect("http://www.fastgo.com.au/TrackNum.aspx?dh=FG0067366AU")
-                        //           .get();
-                        doc = Jsoup.connect(sUrl)
-                                .get();
-                        Elements elements  = doc.select(".s_box table tr");
-                        for (int i = 1; i < elements.size();i++)
+                        Response<ResponseBody> response = ParcelApiClient.getClient(ParcelConstant.COMMPANY_fast_go).create(ParcelService.class).getStatusRes_fastgo_Original(sCode).execute();
+                        if (response.isSuccessful())
                         {
-                            String s = "\n";
-                            Element e = elements.get(i);
-                            Elements info = e.getElementsByTag("td"); // .select("td");
-                            for (Element item:info)
+                            JSONObject jsonObjectAll = new JSONObject(response.body().string());
+                            JSONArray jsonObject = jsonObjectAll.getJSONObject("result").getJSONArray("list");
+                            int s = jsonObject.length();
+                            for (int i = 0; i < s; i++)
                             {
-                                s += item.html() + "\n";
+                                JSONObject o = jsonObject.getJSONObject(i);
+                                String string = String.format("\n%s\n%s\n",
+                                        o.getString("time"),o.getString("remark"));
+                                recordList.add(string);
                             }
-                            recordList.add(s);
                         }
-
-                        recordList.add("\n" + doc.select(".waicha .tigong").get(0).html() +"\n");
-                        Elements elements_china = doc.select(".ickd_return tr");
-                        for (int i = 1; i < elements_china.size(); i++)
+                        else
                         {
-                            String s = "\n";
-                            Element e = elements_china.get(i);
-                            Elements info = e.getElementsByTag("td");
-                            for (Element item:info)
-                            {
-                                s += item.html() + "\n";
-                            }
-                            recordList.add(s);
+
                         }
-
-
-
-                    }catch (IOException e) {
-                        e.printStackTrace();
                     }
+                    catch (Exception e)
+                    {
 
-                    break;
-                case ParcelConstant.COMMPANY_freaky_quick:
-                    try {
-
-                        doc = Jsoup.connect("http://www.freakyquick.com.au/chaxun.php")
-                                .data("numid", sCode)
-                                .post();
-                        Elements elements  = doc.select(".i-middle1 table tr");
-                        for (int i = 1; i < elements.size();i++)
-                        {
-                            String s = "\n";
-                            Element e = elements.get(i);
-                            Log.d(TAG, "doInBackground: ***************");
-                            Elements info = e.getElementsByTag("td"); // .select("td");
-                            for (Element item:info)
-                            {
-                                s += item.html().replaceAll("&nbsp;","") + "\n";
-
-                            }
-                            recordList.add(s);
-                        }
-                    }catch (IOException e) {
-                        e.printStackTrace();
                     }
                     break;
+//                    try {
+//                        String sUrl = String.format("http://www.fastgo.com.au/TrackNum2.aspx?dh=%s",sCode);
+//                        //   doc = Jsoup.connect("http://www.fastgo.com.au/TrackNum.aspx?dh=FG0067366AU")
+//                        //           .get();
+//                        doc = Jsoup.connect(sUrl)
+//                                .get();
+//                        Elements elements  = doc.select(".s_box table tr");
+//                        for (int i = 1; i < elements.size();i++)
+//                        {
+//                            String s = "\n";
+//                            Element e = elements.get(i);
+//                            Elements info = e.getElementsByTag("td"); // .select("td");
+//                            for (Element item:info)
+//                            {
+//                                s += item.html() + "\n";
+//                            }
+//                            recordList.add(s);
+//                        }
+//
+//                        recordList.add("\n" + doc.select(".waicha .tigong").get(0).html() +"\n");
+//                        Elements elements_china = doc.select(".ickd_return tr");
+//                        for (int i = 1; i < elements_china.size(); i++)
+//                        {
+//                            String s = "\n";
+//                            Element e = elements_china.get(i);
+//                            Elements info = e.getElementsByTag("td");
+//                            for (Element item:info)
+//                            {
+//                                s += item.html() + "\n";
+//                            }
+//                            recordList.add(s);
+//                        }
+//                    }catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    break;
+//                case ParcelConstant.COMMPANY_freaky_quick:
+//                    try {
+//
+//                        doc = Jsoup.connect("http://www.freakyquick.com.au/chaxun.php")
+//                                .data("numid", sCode)
+//                                .post();
+//                        Elements elements  = doc.select(".i-middle1 table tr");
+//                        for (int i = 1; i < elements.size();i++)
+//                        {
+//                            String s = "\n";
+//                            Element e = elements.get(i);
+//                            Log.d(TAG, "doInBackground: ***************");
+//                            Elements info = e.getElementsByTag("td"); // .select("td");
+//                            for (Element item:info)
+//                            {
+//                                s += item.html().replaceAll("&nbsp;","") + "\n";
+//
+//                            }
+//                            recordList.add(s);
+//                        }
+//                    }catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
                 case ParcelConstant.COMMPANY_star_ex:
                     try{
 

@@ -20,6 +20,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/parcel_list"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/activity_about_author" />
 
         <TextView
@@ -35,6 +42,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="@string/activity_about_location" />
+
+
+
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

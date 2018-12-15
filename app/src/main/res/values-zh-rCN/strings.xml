@@ -54,7 +54,7 @@
   <string name="activity_customer_address">地址</string>
   <string name="activity_customer_phone">电话</string>
   <string name="activity_customer_note">备注</string>
-  <string name="activity_customer_none_name">路人甲</string>
+  <string name="activity_customer_none_name">匿名</string>
   <string name="activity_parcel_time">时间</string>
   <string name="activity_parcel_number">快递单号</string>
   <string name="activity_parcel_note">备注</string>
@@ -70,7 +70,7 @@
   <string name="dialog_info_title">信息</string>
   <string name="dialog_info_invalid">单号无效.\n目前仅支持以下快递公司的包裹信息查询: </string>
   <string name="title_activity_login">Sign in</string>
-  <string name="activity_about_author"><b>APP作者: </b>Freddie Chen</string>
+  <string name="activity_about_author"><b>APP作者: </b>Freddie</string>
   <string name="activity_about_email"><b>电子邮件地址: </b>freddiechenchen@gmail.com</string>
   <string name="activity_about_weixing"><b>微信号: </b>freddiegooludou</string>
   <string name="activity_about_location"><b>坐标: </b>Brisbane QLD AU</string>
@@ -79,7 +79,7 @@
   <string name="request_permission_camera">应用需要相机权限.</string>
 
 
-
+  <string name="parcel_list">支持扫码查询<b>EWE</b>，<b>Fast-go</b>, <b>星速递</b>，<b>转四方</b>的包裹。</string>
   <!--
       This is the name that users will see when interacting with this channel.
       It should describe the category of notifications that will be sent through this channel
@@ -89,9 +89,9 @@
 
   <string-array name="commpany_array">
     <item>EWE</item>
-    <item>狂派速递</item>
-    <item>FASTGO</item>
+    <item>FastGo</item>
     <item>星速递</item>
+    <item>转四方</item>
     <item>Other</item>
   </string-array>
 

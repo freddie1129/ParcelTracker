@@ -132,7 +132,7 @@ public class ParcelFragment extends Fragment {
 
     public void addParcel(MyParcel myParcel)
     {
-        parcelList = MainActivity.databaseCreator.getDatabase().parcelDao().getAll();
+        parcelList = MainActivity.databaseCreator.getDatabase().parcelDao().getFromCustomer(customer.nId);
         recyclerView.setAdapter(new MyParcelRecyclerViewAdapter(getActivity(), parcelList, mListener));
         recyclerView.getAdapter().notifyDataSetChanged();
     }

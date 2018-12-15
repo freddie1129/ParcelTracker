@@ -38,7 +38,7 @@
     <string name="activity_customer_address">Address</string>
     <string name="activity_customer_phone">Phone</string>
     <string name="activity_customer_note">Note</string>
-    <string name="activity_customer_none_name">no name</string>
+    <string name="activity_customer_none_name">Someone</string>
     <string name="activity_parcel_time">Date</string>
     <string name="activity_parcel_number">Parcel Number</string>
     <string name="activity_parcel_note">Note</string>
@@ -54,10 +54,15 @@
     <string name="dialog_info_title">Info</string>
     <string name="dialog_info_invalid">Parcel number is invalid.\nOnly following commpanies\' parcel can be queried: </string>
     <string name="title_activity_login">Sign in</string>
-    <string name="activity_about_author"><b>Developer: </b>Freddie Chen</string>
+    <string name="activity_about_author"><b>Developer: </b>Freddie</string>
     <string name="activity_about_email"><b>Email Address: </b>freddiechenchen@gmail.com</string>
     <string name="activity_about_weixing"><b>Wechat Account: </b>freddiegooludou</string>
     <string name="activity_about_location"><b>Location: </b>Brisbane QLD AU</string>
+
+    <string name="parcel_list">支持扫码查询<b>EWE</b>，<b>Fast-go</b>, <b>星速递</b>，<b>转四方</b>的包裹。</string>
+
+
+
     <string name="action_camera_text">Camera</string>
     <string name="notification_channel_notification" translatable="false">channel_nofification</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
@@ -75,9 +80,9 @@
 
     <string-array name="commpany_array">
         <item>EWE</item>
-        <item>Freaky Quick</item>
         <item>Fast Go</item>
         <item>Star Express</item>
+        <item>4PX</item>
         <item>Other</item>
     </string-array>
 

@@ -16,7 +16,7 @@ public class WelcomeActivity extends Activity {
         setContentView(R.layout.activity_welcome);
 
         Timer timer = new Timer();
-        timer.schedule(task, 2000);
+        timer.schedule(task, 4000);
     }
 
     TimerTask task = new TimerTask() {
